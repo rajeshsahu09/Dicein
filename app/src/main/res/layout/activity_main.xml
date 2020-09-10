@@ -4,21 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@android:color/background_light"
     tools:context=".MainActivity">
 
     <View
         android:id="@+id/player1View"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="#F7F7F7"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layoutCurrentScore1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        android:padding="2dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/Player1Text"
+        app:layout_constraintEnd_toEndOf="@+id/player1View">
+
+        <TextView
+            android:id="@+id/currentScore1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="48sp"
+            tools:text="5" />
+
+        <TextView
+            android:id="@+id/currentScore1simpletext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current Score"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/Player1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:rotation="180"
+        android:text="Player 1"
+        android:textColor="@android:color/background_light"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/diceimg"
+        app:layout_constraintEnd_toEndOf="@+id/player1View"
+        app:layout_constraintStart_toStartOf="@+id/player1View" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -31,56 +75,154 @@
         android:id="@+id/player2View"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:background="@android:color/background_light"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/player1View"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/playerName2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/actor"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif"
+        android:text="Player 2"
+        android:textColor="@android:color/background_light"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/player2View"
+        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="@+id/player2View"
-        app:layout_constraintTop_toTopOf="@+id/player2View"
+        app:layout_constraintTop_toBottomOf="@+id/diceimg"
         tools:text="Player 2" />
 
     <TextView
         android:id="@+id/score2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="@+id/player2View"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="44"
+        android:textColor="@android:color/background_light"
+        android:textSize="80sp"
         app:layout_constraintStart_toStartOf="@+id/player2View"
         app:layout_constraintTop_toBottomOf="@+id/playerName2"
         tools:text="44" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/hold2btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/player2View"
-        tools:layout_editor_absoluteX="60dp" />
+        android:background="@drawable/custom_button_design"
+        android:text="HOLD"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="@+id/roll2btn"
+        app:layout_constraintEnd_toStartOf="@+id/roll2btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/player2View"
+        app:layout_constraintTop_toTopOf="@+id/roll2btn" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/roll2btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button"
-        tools:layout_editor_absoluteX="266dp" />
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/custom_button_design"
+        android:text="ROLL"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="@+id/player2View"
+        app:layout_constraintEnd_toStartOf="@+id/player2View"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/hold2btn" />
+
+    <LinearLayout
+        android:id="@+id/layoutCurrentScore2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
+        android:padding="2dp"
+        app:layout_constraintEnd_toEndOf="@+id/player2View"
+        app:layout_constraintTop_toBottomOf="@+id/playerName2">
+
+        <TextView
+            android:id="@+id/currentScore2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="48sp"
+            tools:text="5" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current Score"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/diceimg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/player1View"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/player1View"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dice5" />
+
+    <TextView
+        android:id="@+id/score1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="24dp"
+        android:rotation="180"
+        android:text="55"
+        android:textColor="@android:color/background_light"
+        android:textSize="80sp"
+        app:layout_constraintBottom_toTopOf="@+id/Player1Text"
+        app:layout_constraintStart_toStartOf="@+id/player1View" />
+
+    <Button
+        android:id="@+id/hold1btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_design"
+        android:rotation="180"
+        android:text="HOLD"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="@+id/roll1btn"
+        app:layout_constraintEnd_toStartOf="@+id/player1View"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/roll1btn"
+        app:layout_constraintTop_toTopOf="@+id/roll1btn" />
+
+    <Button
+        android:id="@+id/roll1btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/custom_button_design"
+        android:rotation="180"
+        android:text="ROLL"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintEnd_toStartOf="@+id/hold1btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/player1View"
+        app:layout_constraintTop_toTopOf="@+id/player1View" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
