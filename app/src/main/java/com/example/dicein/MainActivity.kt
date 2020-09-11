@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         player[activePlayer].score.text = (score + roundScore).toString()
         score = player[activePlayer].score.text.toString().toInt();
 
-        if(score >= 10) {
+        if(score >= 100) {
             // active player wins
             player[activePlayer].playerText.text = "Winner \uD83C\uDFC6 \uD83E\uDD73"
             player[1-activePlayer].playerText.text = "Looser \uD83D\uDE25"
