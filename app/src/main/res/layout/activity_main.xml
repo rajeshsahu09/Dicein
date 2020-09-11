@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="@android:color/transparent"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,6 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/custom_active_layout_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +23,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/custom_active_layout_background"
             android:gravity="bottom"
             android:orientation="vertical"
             android:padding="10dp"
@@ -78,7 +79,6 @@
                         android:textSize="36sp" />
 
                     <TextView
-                        android:id="@+id/currScoreText1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Current Score"
@@ -103,9 +103,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button_design"
-                    android:onClick="onPass1BtnClick"
-                    android:text="PASS DICE"
+                    android:background="@drawable/button_disabled"
+                    android:drawableStart="@android:drawable/ic_media_pause"
+                    android:onClick="onPassBtnClick"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:text="ADD &amp; PASS"
                     android:textColor="@android:color/background_light" />
 
                 <Button
@@ -113,8 +116,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button_design"
-                    android:onClick="onRoll1BtnClick"
+                    android:background="@drawable/button_disabled"
+                    android:drawableStart="@android:drawable/ic_popup_sync"
+                    android:onClick="onRollBtnClick"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
                     android:text="ROLL DICE"
                     android:textColor="@android:color/background_light" />
             </LinearLayout>
@@ -130,6 +136,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_inactive_layout_background"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,7 +145,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/custom_inactive_layout_background"
             android:gravity="top"
             android:orientation="vertical"
             android:padding="10dp"
@@ -162,8 +169,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button_design"
-                    android:onClick="onRoll2BtnClick"
+                    android:background="@drawable/button_disabled"
+                    android:drawableStart="@android:drawable/ic_popup_sync"
+                    android:onClick="onRollBtnClick"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
                     android:rotation="180"
                     android:text="ROLL DICE"
                     android:textColor="@android:color/background_light" />
@@ -174,10 +184,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/custom_button_design"
-                    android:onClick="onPass2BtnClick"
+                    android:background="@drawable/button_disabled"
+                    android:drawableStart="@android:drawable/ic_media_pause"
+                    android:onClick="onPassBtnClick"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
                     android:rotation="180"
-                    android:text="PASS DICE"
+                    android:text="ADD &amp; PASS"
                     android:textColor="@android:color/background_light" />
 
             </LinearLayout>
@@ -197,7 +210,6 @@
                     android:textAlignment="center">
 
                     <TextView
-                        android:id="@+id/currScoreText2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:rotation="180"
@@ -259,6 +271,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:elevation="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

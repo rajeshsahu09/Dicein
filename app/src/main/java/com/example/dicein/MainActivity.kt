@@ -5,121 +5,79 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    var roundScore = 0
-    var activePlayer = 0
+    var activePlayer = -1
 
+    lateinit var player1 : Player
+    lateinit var player2 : Player
+    lateinit var player : List<Player>
+
+    fun toggleActivePlayer(actPlayer: Int) : Int {
+        return 1 - actPlayer
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        player1 = Player(passDice1btn, rollDice1btn, score1Text, currentScore1Text)
+        player2 = Player(passDice2btn, rollDice2btn, score2Text, currentScore2Text)
+        player = listOf<Player>(player1, player2)
+
         diceImg.visibility = View.INVISIBLE;
-        activePlayer = (1 until 3).random()
+        activePlayer = (0 until 2).random()
 
-        currentScore1Text.text = roundScore.toString()
-        currentScore2Text.text = roundScore.toString()
-        score1Text.text = roundScore.toString()
-        score2Text.text = roundScore.toString()
-
-        if(activePlayer == 1) {
-            rollDice2btn.isClickable = false
-            passDice2btn.isClickable = false
-            rollDice1btn.isClickable = true
-            passDice1btn.isClickable = true
-        } else {
-            rollDice2btn.isClickable = true
-            passDice2btn.isClickable = true
-            rollDice1btn.isClickable = false
-            passDice1btn.isClickable = false
-        }
+        player[activePlayer].intiPlayer(true)
+        player[1-activePlayer].intiPlayer(false)
     }
 
-    fun onRoll1BtnClick(view: View) {
-        // 1 roll the dice
-        val dice = (1 until 7).random()
+    fun changePlayer(actPlayer: Int) {
+        // reset values and pass to other player
+        roundScore = 0
+        player[activePlayer].roundScore.text = roundScore.toString()
+        diceImg.visibility = View.INVISIBLE;
 
-        // 2 display outcome
+        // toggle active player buttons
+        player[activePlayer].toggleButtons()
+        player[1-activePlayer].toggleButtons()
+        activePlayer = toggleActivePlayer(activePlayer)
+    }
+
+    fun rollDice() : Int { // generates random integers from 1 to 6
+        return (1 until 7).random()
+    }
+    fun getResourceId(diceOutcome: Int): Int {
         diceImg.visibility = View.VISIBLE;
-        val resourceId = resources.getIdentifier("dice${dice}", "drawable", packageName)
-        diceImg.setImageResource(resourceId)
+        // fetch the resource images using the res.drawable.imagesPackageNames
+        return resources.getIdentifier("dice${diceOutcome}", "drawable", packageName)
+    }
+    fun onRollBtnClick(view: View) {
+        // 1 roll the dice
+        val dice = rollDice()
+
+        // 2 display outcome in the image view
+        diceImg.setImageResource(getResourceId(dice))
 
         // 3 update score
         if(dice == 1) {
-            // reset values and pass to other player
-            roundScore = 0
-            currentScore1Text.text = roundScore.toString()
-            diceImg.visibility = View.INVISIBLE;
-            activePlayer = 2
-            rollDice2btn.isClickable = true
-            passDice2btn.isClickable = true
-            rollDice1btn.isClickable = false
-            passDice1btn.isClickable = false
+            // change player
+            changePlayer(activePlayer)
         } else {
             // update roundScore
             roundScore += dice
-            currentScore1Text.text = roundScore.toString()
+            player[activePlayer].roundScore.text = roundScore.toString()
         }
     }
 
-    fun onPass1BtnClick(view: View) {
-        score1Text.text = (score1Text.text.toString().toInt() + roundScore).toString()
-        if(score1Text.text.toString().toInt() >= 100) {
-            Toast.makeText(this, "player 1 wins", Toast.LENGTH_SHORT).show()
-        }
-        roundScore = 0
-        currentScore1Text.text = roundScore.toString()
-        diceImg.visibility = View.INVISIBLE;
-        activePlayer = 2
-        rollDice2btn.isClickable = true
-        passDice2btn.isClickable = true
-        rollDice1btn.isClickable = false
-        passDice1btn.isClickable = false
-
-    }
-
-    fun onRoll2BtnClick(view: View) {
-        // 1 roll the dice
-        val dice = (1 until 7).random()
-
-        // 2 display outcome
-        diceImg.visibility = View.VISIBLE;
-        val resourceId = resources.getIdentifier("dice${dice}", "drawable", packageName)
-        diceImg.setImageResource(resourceId)
-
-        // 3 update score
-        if(dice == 1) {
-            // reset values and pass to other player
-            roundScore = 0
-            currentScore2Text.text = roundScore.toString()
-            diceImg.visibility = View.INVISIBLE;
-            activePlayer = 1
-            rollDice2btn.isClickable = false
-            passDice2btn.isClickable = false
-            rollDice1btn.isClickable = true
-            passDice1btn.isClickable = true
-        } else {
-            // update roundScore
-            roundScore += dice
-            currentScore2Text.text = roundScore.toString()
+    fun onPassBtnClick(view: View) {
+        var score = player[activePlayer].score.text.toString().toInt();
+        player[activePlayer].score.text = (score + roundScore).toString()
+        score = player[activePlayer].score.text.toString().toInt();
+        if(score >= 100) {
+            Toast.makeText(this, "player ${activePlayer+1} wins \uD83C\uDFC6 \uD83E\uDD73", Toast.LENGTH_SHORT).show()
         }
 
-    }
-
-    fun onPass2BtnClick(view: View) {
-        score2Text.text = (score2Text.text.toString().toInt() + roundScore).toString()
-        if(score2Text.text.toString().toInt() >= 100) {
-            Toast.makeText(this, "player 2 wins", Toast.LENGTH_SHORT).show()
-            return;
-        }
-        roundScore = 0
-        currentScore2Text.text = roundScore.toString()
-        diceImg.visibility = View.INVISIBLE;
-        activePlayer = 1
-        rollDice2btn.isClickable = false
-        passDice2btn.isClickable = false
-        rollDice1btn.isClickable = true
-        passDice1btn.isClickable = true
+        // change player
+        changePlayer(activePlayer);
     }
 }
