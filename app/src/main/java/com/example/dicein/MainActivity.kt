@@ -1,9 +1,8 @@
 package com.example.dicein
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,21 +13,28 @@ class MainActivity : AppCompatActivity() {
     lateinit var player : List<Player>
 
     fun toggleActivePlayer(actPlayer: Int) : Int {
-        return 1 - actPlayer
+        return (1 - actPlayer)
     }
+
+    fun initGame() {
+        player1 = Player(passDice1btn, rollDice1btn, score1Text, currentScore1Text, Player1Text)
+        player2 = Player(passDice2btn, rollDice2btn, score2Text, currentScore2Text, Player2Text)
+        player = listOf<Player>(player1, player2)
+
+        diceImg.visibility = View.INVISIBLE;
+        newGameBtn.visibility = View.INVISIBLE;
+        activePlayer = (0 until 2).random()
+        roundScore = 0
+
+        player[activePlayer].intiPlayer(true)
+        player[1 - activePlayer].intiPlayer(false)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        player1 = Player(passDice1btn, rollDice1btn, score1Text, currentScore1Text)
-        player2 = Player(passDice2btn, rollDice2btn, score2Text, currentScore2Text)
-        player = listOf<Player>(player1, player2)
-
-        diceImg.visibility = View.INVISIBLE;
-        activePlayer = (0 until 2).random()
-
-        player[activePlayer].intiPlayer(true)
-        player[1-activePlayer].intiPlayer(false)
+        initGame()
     }
 
     fun changePlayer(actPlayer: Int) {
@@ -39,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         // toggle active player buttons
         player[activePlayer].toggleButtons()
-        player[1-activePlayer].toggleButtons()
+        player[1 - activePlayer].toggleButtons()
         activePlayer = toggleActivePlayer(activePlayer)
     }
 
@@ -69,12 +75,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun onnewGameClick(view: View) {
+        Player1Text.text = "Player 1"
+        Player2Text.text = "Player 2"
+        initGame()
+    }
+
     fun onPassBtnClick(view: View) {
         var score = player[activePlayer].score.text.toString().toInt();
         player[activePlayer].score.text = (score + roundScore).toString()
         score = player[activePlayer].score.text.toString().toInt();
-        if(score >= 100) {
-            Toast.makeText(this, "player ${activePlayer+1} wins \uD83C\uDFC6 \uD83E\uDD73", Toast.LENGTH_SHORT).show()
+
+        if(score >= 10) {
+            // active player wins
+            player[activePlayer].playerText.text = "Winner \uD83C\uDFC6 \uD83E\uDD73"
+            player[1-activePlayer].playerText.text = "Looser \uD83D\uDE25"
+
+            // ui changes
+            player[activePlayer].disableButtons()
+            player[1-activePlayer].disableButtons()
+            newGameBtn.visibility = View.VISIBLE
+            diceImg.visibility = View.INVISIBLE
+            return
         }
 
         // change player
