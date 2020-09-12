@@ -1,23 +1,22 @@
 package com.example.dicein
 
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    var activePlayer = -1
-
     lateinit var player1 : Player
     lateinit var player2 : Player
-    lateinit var player : List<Player>
+    lateinit var player : ArrayList<Player>
+    var activePlayer = -1
 
     fun initGame() {
         player1 = Player(passDice1btn, rollDice1btn, score1Text, currentScore1Text, Player1Text, roundMessage1Text)
         player2 = Player(passDice2btn, rollDice2btn, score2Text, currentScore2Text, Player2Text, roundMessage2Text)
-        player = listOf<Player>(player1, player2)
+        player = arrayListOf<Player>(player1, player2)
 
         diceImg.visibility = View.INVISIBLE;
         newGameBtn.visibility = View.INVISIBLE;
@@ -27,28 +26,54 @@ class MainActivity : AppCompatActivity() {
         player[activePlayer].intiPlayer(true)
         player[1 - activePlayer].intiPlayer(false)
     }
-    /**
-     * when we change an activity from potrait to landscape or vice versa
-     * The current activity is destroyed.
-     * So we need to store the current activities values to pass onto other.
-     * onSaveInstanceState(outState: Bundle) --> save state in this fun
-     *  onRestoreInstanceState(savedInstanceState: Bundle) or "onCreate(savedInstanceState: Bundle?)"--> restore the values on this state
-     */
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putParcelable(EXTRA_PLAYER, player)
-//    }
 
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        super.onRestoreInstanceState(savedInstanceState)
-//        if(savedInstanceState != null) player = savedInstanceState.getParcelable(EXTRA_PLAYER)!!
-//    }
+    // save instance when orientation changes
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("score1", player[activePlayer].score.text.toString())
+        outState.putString("roundscoretext1", player[activePlayer].roundScore.text.toString())
+        outState.putString("player1", player[activePlayer].playerText.text.toString())
+        outState.putString("roundmessage1", player[activePlayer].roundMessage.text.toString())
+
+        outState.putString("score2", player[1-activePlayer].score.text.toString())
+        outState.putString("roundscoretext2", player[1-activePlayer].roundScore.text.toString())
+        outState.putString("player2", player[1-activePlayer].playerText.text.toString())
+        outState.putString("roundmessage2", player[1-activePlayer].roundMessage.text.toString())
+
+        outState.putInt("roundscoreint", roundScore)
+        outState.putInt("activeplayer", activePlayer)
+
+//        outState.putInt("image", )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initGame()
+    }
+
+    // restore saved instance when orientation changes
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if(savedInstanceState != null) {
+            roundScore = savedInstanceState.getInt("roundscoreint")
+            activePlayer = savedInstanceState.getInt("activeplayer")
+
+            player[activePlayer].score.text = savedInstanceState.getString("score1")
+            player[activePlayer].roundScore.text = savedInstanceState.getString("roundscoretext1")
+            player[activePlayer].playerText.text = savedInstanceState.getString("player1")
+            player[activePlayer].roundMessage.text = savedInstanceState.getString("roundmessage1")
+
+            player[1-activePlayer].score.text = savedInstanceState.getString("score2")
+            player[1-activePlayer].roundScore.text = savedInstanceState.getString("roundscoretext2")
+            player[1-activePlayer].playerText.text = savedInstanceState.getString("player2")
+            player[1-activePlayer].roundMessage.text = savedInstanceState.getString("roundmessage2")
+
+            player[activePlayer].restoreButtons(true)
+            player[1-activePlayer].restoreButtons(false)
+        }
     }
 
     fun toggleActivePlayer(actPlayer: Int) : Int {
@@ -143,13 +168,13 @@ class MainActivity : AppCompatActivity() {
         if(score >= 100) {
             // active player wins
             player[activePlayer].playerText.text = "Winner \uD83C\uDFC6 \uD83E\uDD73"
-            player[1-activePlayer].playerText.text = "Looser \uD83D\uDE25"
+            player[1 - activePlayer].playerText.text = "Looser \uD83D\uDE25"
             setRoundMessage("YOO-HOO!!!", activePlayer)
-            setRoundMessage("HARD-LUCK", 1-activePlayer)
+            setRoundMessage("HARD-LUCK", 1 - activePlayer)
 
             // ui changes
             player[activePlayer].disableButtons()
-            player[1-activePlayer].disableButtons()
+            player[1 - activePlayer].disableButtons()
             newGameBtn.visibility = View.VISIBLE
             diceImg.visibility = View.INVISIBLE
             return
@@ -157,9 +182,9 @@ class MainActivity : AppCompatActivity() {
 
         // set message
         setRoundMessage("Round Score ${roundScore}", activePlayer)
-        player[1-activePlayer].roundMessage.visibility = View.INVISIBLE
+        player[1 - activePlayer].roundMessage.visibility = View.INVISIBLE
 
         // change player
-        activePlayer = changePlayer(activePlayer);
+        activePlayer = changePlayer(activePlayer)
     }
 }

@@ -18,7 +18,11 @@ class Player(
 
         passdicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
         rolldicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
-        roundMessage.visibility = View.INVISIBLE
+        roundMessage.visibility = if(!status) {
+            if(playerText.text.toString() == "Player 1") roundMessage.text = "Player-2 Starts"
+            else roundMessage.text = "Player-1 Starts"
+            View.VISIBLE
+        } else View.INVISIBLE
     }
 
     fun toggleButtons() {
@@ -29,6 +33,11 @@ class Player(
     fun disableButtons() {
         passdicebtn.visibility = View.INVISIBLE
         rolldicebtn.visibility = View.INVISIBLE
+    }
+
+    fun restoreButtons(status: Boolean) {
+        passdicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
+        rolldicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
     }
 
     fun enableButtons() {
