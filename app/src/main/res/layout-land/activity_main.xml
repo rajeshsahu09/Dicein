@@ -3,65 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/background_light"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/LinearLayout2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/custom_player2_layout_background"
+        android:background="@color/colorPrimaryDark"
         android:gravity="top"
         android:orientation="vertical"
         android:padding="10dp"
         android:rotation="0"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalguideline"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/Player2Text"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="top"
-            android:orientation="horizontal"
-            android:padding="2dp">
-
-            <Button
-                android:id="@+id/rollDice2btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/custom_active_button_design"
-                android:drawableStart="@android:drawable/ic_popup_sync"
-                android:onClick="onRollBtnClick"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:rotation="180"
-                android:text="ROLL DICE"
-                android:textColor="@android:color/background_light" />
-
-            <Button
-                android:id="@+id/passDice2btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_active_button_design"
-                android:drawableStart="@android:drawable/ic_media_pause"
-                android:onClick="onPassBtnClick"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:rotation="180"
-                android:text="ADD &amp; PASS"
-                android:textColor="@android:color/background_light" />
-
-        </LinearLayout>
+            android:gravity="center"
+            android:text="Player 2"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="30sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +47,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:rotation="180"
                     android:text="Current Score"
                     android:textAlignment="center"
                     android:textColor="@android:color/background_light"
@@ -90,7 +56,6 @@
                     android:id="@+id/currentScore2Text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:rotation="180"
                     android:text="5"
                     android:textAlignment="center"
                     android:textColor="@android:color/background_light"
@@ -104,7 +69,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:rotation="180"
                 android:text="55"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
@@ -112,44 +76,64 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/Player2Text"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:drawablePadding="8dp"
             android:gravity="bottom"
-            android:rotation="180"
-            android:text="Player 2"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textSize="30sp" />
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <Button
+                android:id="@+id/rollDice2btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_active_button_design"
+                android:drawableStart="@android:drawable/ic_popup_sync"
+                android:onClick="onRollBtnClick"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="ROLL DICE"
+                android:textColor="@android:color/background_light" />
+
+            <Button
+                android:id="@+id/passDice2btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_active_button_design"
+                android:drawableStart="@android:drawable/ic_media_pause"
+                android:onClick="onPassBtnClick"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="ADD &amp; PASS"
+                android:textColor="@android:color/background_light" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/custom_player1_layout_background"
+        android:background="@color/colorPrimary"
         android:gravity="bottom"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/horizontalguideline">
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/Player1Text"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:drawablePadding="8dp"
-            android:gravity="bottom"
+            android:gravity="center"
             android:text="Player 1"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
@@ -217,8 +201,8 @@
                 android:background="@drawable/custom_active_button_design"
                 android:drawableStart="@android:drawable/ic_media_pause"
                 android:onClick="onPassBtnClick"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:text="ADD &amp; PASS"
                 android:textColor="@android:color/background_light" />
 
@@ -230,20 +214,13 @@
                 android:background="@drawable/custom_active_button_design"
                 android:drawableStart="@android:drawable/ic_popup_sync"
                 android:onClick="onRollBtnClick"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:text="ROLL DICE"
                 android:textColor="@android:color/background_light" />
         </LinearLayout>
 
     </LinearLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalguideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.500684" />
 
     <ImageView
         android:id="@+id/diceImg"
@@ -259,9 +236,10 @@
 
     <Button
         android:id="@+id/newGameBtn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/custom_active_button_design"
         android:drawableStart="@android:drawable/ic_menu_add"
@@ -270,10 +248,9 @@
         android:paddingEnd="108dp"
         android:text="NEW GAME"
         android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/diceImg" />
 
     <TextView
         android:id="@+id/roundMessage1Text"
@@ -285,21 +262,27 @@
         android:textColor="@android:color/background_light"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@id/LinearLayout1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/LinearLayout1"
+        app:layout_constraintStart_toEndOf="@id/verticalGuideline" />
 
     <TextView
         android:id="@+id/roundMessage2Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/actor"
-        android:rotation="180"
         android:text="TextView"
         android:textColor="@android:color/background_light"
         android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/LinearLayout2" />
+        app:layout_constraintBottom_toBottomOf="@id/LinearLayout2"
+        app:layout_constraintEnd_toStartOf="@id/verticalGuideline"
+        app:layout_constraintStart_toStartOf="@id/LinearLayout2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.500684" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
