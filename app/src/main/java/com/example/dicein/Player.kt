@@ -10,11 +10,13 @@ class Player(
     var score: TextView,
     var roundScore: TextView,
     var playerText: TextView,
-    var roundMessage: TextView
+    var roundMessage: TextView,
+    var oponentScore: TextView
 ) {
     fun intiPlayer(status: Boolean) {
         score.text = "0"
         roundScore.text = "0"
+        oponentScore.text = "0"
 
         passdicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
         rolldicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
@@ -23,6 +25,7 @@ class Player(
             else roundMessage.text = "Player-1 Starts"
             View.VISIBLE
         } else View.INVISIBLE
+
     }
 
     fun toggleButtons() {
@@ -35,18 +38,16 @@ class Player(
         rolldicebtn.visibility = View.INVISIBLE
     }
 
-    fun restoreButtons(status: Boolean) {
-        passdicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
-        rolldicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
-    }
-
-    fun enableButtons() {
-        passdicebtn.visibility = View.VISIBLE
-        rolldicebtn.visibility = View.VISIBLE
-    }
-
-    fun clearTexts() {
-        score.text = "0"
-        roundScore.text = "0"
+    fun restoreUI(status: Boolean, winnerStatus: Int) {
+        if(winnerStatus == 0) {
+            passdicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
+            rolldicebtn.visibility = if(status) View.VISIBLE else View.INVISIBLE
+            roundMessage.visibility = if(!status) View.VISIBLE else View.INVISIBLE
+        } else {
+            passdicebtn.visibility = View.INVISIBLE
+            rolldicebtn.visibility = View.INVISIBLE
+            roundMessage.visibility = View.VISIBLE
+        }
+        oponentScore.text = score.text
     }
 }

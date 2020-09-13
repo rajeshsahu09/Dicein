@@ -259,15 +259,13 @@
 
     <Button
         android:id="@+id/newGameBtn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:background="@drawable/custom_active_button_design"
         android:drawableStart="@android:drawable/ic_menu_add"
         android:onClick="onNewGameClick"
-        android:paddingStart="108dp"
-        android:paddingEnd="108dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="10dp"
         android:text="NEW GAME"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -301,5 +299,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/LinearLayout2" />
+
+    <TextView
+        android:id="@+id/oponent2Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="101"
+        android:textColor="@android:color/background_light"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/LinearLayout1"
+        app:layout_constraintEnd_toStartOf="@+id/newGameBtn"
+        app:layout_constraintTop_toTopOf="@+id/LinearLayout2" />
+
+    <TextView
+        android:id="@+id/oponent1Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:rotation="180"
+        android:text="101"
+        android:textColor="@android:color/background_light"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/LinearLayout1"
+        app:layout_constraintStart_toEndOf="@+id/newGameBtn"
+        app:layout_constraintTop_toTopOf="@+id/LinearLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

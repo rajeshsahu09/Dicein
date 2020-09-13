@@ -285,4 +285,31 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.500684" />
 
+    <TextView
+        android:id="@+id/oponent2Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="55"
+        android:textColor="@android:color/background_light"
+        android:textSize="62sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/LinearLayout1"
+        app:layout_constraintEnd_toStartOf="@+id/newGameBtn"
+        app:layout_constraintTop_toTopOf="@+id/LinearLayout2" />
+
+    <TextView
+        android:id="@+id/oponent1Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:rotation="180"
+        android:text="55"
+        android:textColor="@android:color/background_light"
+        android:textSize="62sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/LinearLayout1"
+        app:layout_constraintStart_toEndOf="@+id/newGameBtn"
+        app:layout_constraintTop_toTopOf="@+id/LinearLayout2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

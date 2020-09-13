@@ -1,10 +1,11 @@
 package com.example.dicein
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -12,16 +13,36 @@ class MainActivity : AppCompatActivity() {
     lateinit var player2 : Player
     lateinit var player : ArrayList<Player>
     var activePlayer = -1
+    var winnerStatus = 0
+
+    var mUri: Uri? = null
 
     fun initGame() {
-        player1 = Player(passDice1btn, rollDice1btn, score1Text, currentScore1Text, Player1Text, roundMessage1Text)
-        player2 = Player(passDice2btn, rollDice2btn, score2Text, currentScore2Text, Player2Text, roundMessage2Text)
+        player1 = Player(
+            passDice1btn,
+            rollDice1btn,
+            score1Text,
+            currentScore1Text,
+            Player1Text,
+            roundMessage1Text,
+            oponent1Score
+        )
+        player2 = Player(
+            passDice2btn,
+            rollDice2btn,
+            score2Text,
+            currentScore2Text,
+            Player2Text,
+            roundMessage2Text,
+            oponent2Score
+        )
         player = arrayListOf<Player>(player1, player2)
 
         diceImg.visibility = View.INVISIBLE;
         newGameBtn.visibility = View.INVISIBLE;
         activePlayer = (0 until 2).random()
         roundScore = 0
+        winnerStatus = 0
 
         player[activePlayer].intiPlayer(true)
         player[1 - activePlayer].intiPlayer(false)
@@ -32,21 +53,24 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         outState.putString("score1", player[activePlayer].score.text.toString())
+        outState.putString("oponentscore1", player[activePlayer].oponentScore.text.toString())
         outState.putString("roundscoretext1", player[activePlayer].roundScore.text.toString())
         outState.putString("player1", player[activePlayer].playerText.text.toString())
         outState.putString("roundmessage1", player[activePlayer].roundMessage.text.toString())
 
-        outState.putString("score2", player[1-activePlayer].score.text.toString())
-        outState.putString("roundscoretext2", player[1-activePlayer].roundScore.text.toString())
-        outState.putString("player2", player[1-activePlayer].playerText.text.toString())
-        outState.putString("roundmessage2", player[1-activePlayer].roundMessage.text.toString())
+        outState.putString("score2", player[1 - activePlayer].score.text.toString())
+        outState.putString("oponentscore2", player[1 - activePlayer].oponentScore.text.toString())
+        outState.putString("roundscoretext2", player[1 - activePlayer].roundScore.text.toString())
+        outState.putString("player2", player[1 - activePlayer].playerText.text.toString())
+        outState.putString("roundmessage2", player[1 - activePlayer].roundMessage.text.toString())
 
         outState.putInt("roundscoreint", roundScore)
         outState.putInt("activeplayer", activePlayer)
+        outState.putInt("winner", winnerStatus)
 
-//        outState.putInt("image", )
+        outState.putParcelable("uri", mUri)
+        outState.putBoolean("diceimagevisible", (diceImg.visibility == View.VISIBLE))
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -60,19 +84,30 @@ class MainActivity : AppCompatActivity() {
         if(savedInstanceState != null) {
             roundScore = savedInstanceState.getInt("roundscoreint")
             activePlayer = savedInstanceState.getInt("activeplayer")
+            winnerStatus = savedInstanceState.getInt("winner")
 
             player[activePlayer].score.text = savedInstanceState.getString("score1")
+            player[activePlayer].oponentScore.text = savedInstanceState.getString("oponentscore1")
             player[activePlayer].roundScore.text = savedInstanceState.getString("roundscoretext1")
             player[activePlayer].playerText.text = savedInstanceState.getString("player1")
             player[activePlayer].roundMessage.text = savedInstanceState.getString("roundmessage1")
 
-            player[1-activePlayer].score.text = savedInstanceState.getString("score2")
-            player[1-activePlayer].roundScore.text = savedInstanceState.getString("roundscoretext2")
-            player[1-activePlayer].playerText.text = savedInstanceState.getString("player2")
-            player[1-activePlayer].roundMessage.text = savedInstanceState.getString("roundmessage2")
+            player[1 - activePlayer].score.text = savedInstanceState.getString("score2")
+            player[1 - activePlayer].oponentScore.text = savedInstanceState.getString("oponentscore2")
+            player[1 - activePlayer].roundScore.text = savedInstanceState.getString("roundscoretext2")
+            player[1 - activePlayer].playerText.text = savedInstanceState.getString("player2")
+            player[1 - activePlayer].roundMessage.text = savedInstanceState.getString("roundmessage2")
 
-            player[activePlayer].restoreButtons(true)
-            player[1-activePlayer].restoreButtons(false)
+            player[activePlayer].restoreUI(true, winnerStatus)
+            player[1 - activePlayer].restoreUI(false, winnerStatus)
+
+            newGameBtn.visibility = if(winnerStatus == 1) View.VISIBLE else View.INVISIBLE
+
+            mUri = savedInstanceState.getParcelable("uri");
+            diceImg.setImageURI(null)
+            diceImg.setImageURI(mUri)
+            val visible = savedInstanceState.getBoolean("diceimagevisible")
+            diceImg.visibility = if(visible) View.VISIBLE else View.INVISIBLE
         }
     }
 
@@ -122,10 +157,12 @@ class MainActivity : AppCompatActivity() {
         return outcome
     }
 
-    fun getResourceId(diceOutcome: Int): Int {
+    fun getResourceId(diceOutcome: Int): Uri? {
         diceImg.visibility = View.VISIBLE;
         // fetch the resource images using the res.drawable.imagesPackageNames
-        return resources.getIdentifier("dice${diceOutcome}", "drawable", packageName)
+//        return resources.getIdentifier("dice${diceOutcome}", "drawable", packageName)
+        mUri = Uri.parse("android.resource://$packageName/drawable/dice$diceOutcome")
+        return mUri
     }
 
     // BUTTON PRESSED
@@ -134,7 +171,8 @@ class MainActivity : AppCompatActivity() {
         val dice = rollDice(player[activePlayer].score.text.toString().toInt(), roundScore)
 
         // 2 display outcome in the image view
-        diceImg.setImageResource(getResourceId(dice))
+        diceImg.setImageURI(null)
+        diceImg.setImageURI(getResourceId(dice))
 
         // 3 update score
         if(dice == 1) {
@@ -155,7 +193,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setRoundMessage(msg: String, actPlayer: Int) {
-        player[actPlayer].roundMessage.typeface = ResourcesCompat.getFont(this.applicationContext, R.font.actor)
+        player[actPlayer].roundMessage.typeface = ResourcesCompat.getFont(
+            this.applicationContext,
+            R.font.actor
+        )
         player[actPlayer].roundMessage.visibility = View.VISIBLE
         player[actPlayer].roundMessage.text = msg
     }
@@ -165,7 +206,13 @@ class MainActivity : AppCompatActivity() {
         player[activePlayer].score.text = (score + roundScore).toString()
         score = player[activePlayer].score.text.toString().toInt();
 
-        if(score >= 100) {
+        player[activePlayer].oponentScore.text = player[activePlayer].score.text
+        player[1 - activePlayer].oponentScore.text = player[1 - activePlayer].score.text
+
+        if(score >= 10) {
+            // set winner status
+            winnerStatus = 1
+
             // active player wins
             player[activePlayer].playerText.text = "Winner \uD83C\uDFC6 \uD83E\uDD73"
             player[1 - activePlayer].playerText.text = "Looser \uD83D\uDE25"
