@@ -209,7 +209,7 @@ class MainActivity : AppCompatActivity() {
         player[activePlayer].oponentScore.text = player[activePlayer].score.text
         player[1 - activePlayer].oponentScore.text = player[1 - activePlayer].score.text
 
-        if(score >= 10) {
+        if(score >= 100) {
             // set winner status
             winnerStatus = 1
 
